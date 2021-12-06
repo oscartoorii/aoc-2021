@@ -14,7 +14,7 @@ console.log(inputData)
 
 console.log(`Initial state: ${inputData}`)
 let currentFishes;
-for (day = 0; day < 18; day++) {
+for (day = 0; day < 80; day++) {
     currentFishes = inputData.length
     for (fish = 0; fish < currentFishes; fish++) {
         if (inputData[fish] === 0) {
