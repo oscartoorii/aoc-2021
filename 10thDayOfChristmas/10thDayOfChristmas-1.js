@@ -20,19 +20,20 @@ const illegalCharMap = {
     ">": 25137,
 }
 
-const findIllegalChar = (line, charPos, openingChar) => {
-    if (charPos >= line.length) {
-        return 1;
-    }
-    if (openingChars.includes(line[charPos])) { // Indicates opening char
-        return findIllegalChar(line, charPos+1, line[charPos])
-    }
-    (line[charPos] === Object.keys(illegalCharMap)[0]) ? openingChar === openingChar[0] : false
-    (line[charPos] === Object.keys(illegalCharMap)[1]) ? openingChar === openingChar[1] : false
-    (line[charPos] === Object.keys(illegalCharMap)[2]) ? openingChar === openingChar[2] : false
-    (line[charPos] === Object.keys(illegalCharMap)[3]) ? openingChar === openingChar[3] : false
-}
-
+let totalSyntaxErrorScore = 0;
 for (line of inputData) {
-
+    let stack = []
+    for (char of line) {
+        if (openingChars.includes(char)) {
+            stack.push(char)
+        } else if (Object.keys(illegalCharMap).includes(char)) {
+            if (openingChars.indexOf(stack.slice(-1)[0]) === Object.keys(illegalCharMap).indexOf(char)) {
+                stack.pop()
+            } else {
+                totalSyntaxErrorScore += Object.entries(illegalCharMap).filter(e => char === e[0])[0][1]
+                break;
+            }
+        }
+    }
 }
+console.log(`Total Syntax Error Score: ${totalSyntaxErrorScore}`)
